@@ -24,12 +24,6 @@ export const items = [
     selected: false,
     route: '/home/products',
     svgIcon: aggregateFieldsIcon,
-    children:[{
-      text: 'Products-grid1',
-      selected: false,
-      route: '/home/product-grid1',
-      svgIcon: aggregateFieldsIcon,
-    }]
   },
   {
     text: 'Products-grid',
