@@ -30,6 +30,15 @@ export const items = [
     selected: false,
     route: '/home/product-grid',
     svgIcon: calculatorIcon,
+    id:5,
+  },
+  {
+    text:'test',
+    selected:false,
+    route:'/home/account',
+    svgIcon:calculatorIcon,
+    parentId:5,
+    level:1
   },
   { separator: true },
   {
