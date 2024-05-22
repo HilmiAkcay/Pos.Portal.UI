@@ -1,96 +1,34 @@
 import * as React from "react";
-import { useLocation, useNavigate, Outlet,Link } from "react-router-dom";
+import { useLocation, useNavigate, Outlet, Link } from "react-router-dom";
 import {
   Drawer,
   DrawerContent,
   DrawerItem,
 } from "@progress/kendo-react-layout";
 import { Button } from "@progress/kendo-react-buttons";
+import { menu } from "./MenuContent";
 import {
-  pencilIcon,
-  heartIcon,
-  minusIcon,
-  globeOutlineIcon,
   menuIcon,
   chevronDownIcon,
   chevronRightIcon,
-  gridIcon,
-  globeIcon,
-  aggregateFieldsIcon,
-  gearIcon,
-  calculatorIcon,
 } from "@progress/kendo-svg-icons";
 import { SvgIcon } from "@progress/kendo-react-common";
-
-export const items = [
-  {
-    text: "Dashboard",
-    selected: true,
-    route: "/home/dashboard",
-    svgIcon: gridIcon,
-  },
-  {
-    text: "Performance and sales",
-    selected: false,
-    route: "/home/performance-and-sales",
-    svgIcon: globeIcon,
-  },
-  {
-    text: "Products",
-    selected: false,
-    route: "/home/products",
-    svgIcon: aggregateFieldsIcon,
-  },
-  {
-    text: "Products-grid",
-    selected: false,
-    route: "/home/product-grid",
-    svgIcon: calculatorIcon,
-    id: 5,
-  },
-  {
-    text: "test",
-    selected: false,
-    route: "/home/account",
-    svgIcon: calculatorIcon,
-    parentId: 5,
-    level: 1,
-  },
-  { separator: true },
-  {
-    text: "Settings",
-    selected: false,
-    route: "/home/account",
-    svgIcon: gearIcon,
-  },
-  {
-    route: "/home/billing",
-    disabled: true,
-  },
-  {
-    route: "/home/notifications",
-    disabled: true,
-  },
-  {
-    route: "/home/about",
-    disabled: true,
-  },
-];
+import { Alert } from "./dashboard/Alert";
+import { Input } from "@progress/kendo-react-inputs";
 
 const CustomItem = (props) => {
   const { visible, ...others } = props;
-  const className = props.parentId !=null?" subLi":"";
-  console.log(className)
-  console.log(props)
+  const className = props.parentId != null ? " subLi" : "";
+  console.log(className);
+  console.log(props);
   const arrowDir = props.dataExpanded ? chevronDownIcon : chevronRightIcon;
   return props.visible === false ? null : (
     <DrawerItem {...others}>
-        <div className={className}>
-      <SvgIcon icon={props.svgIcon}  />
+      <div className={className}>
+        <SvgIcon icon={props.svgIcon} />
+      </div>
 
-        </div>
-      
-      <span className={"k-item-text"}>{props.text}</span>
+      <span className={"k-item-text"}>{props.text && props.text}</span>
       {props.dataExpanded !== undefined && (
         <SvgIcon
           icon={arrowDir}
@@ -106,74 +44,7 @@ const DrawerContainer2 = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [drawerExpanded, setDrawerExpanded] = React.useState(true);
-  const [items, setItems] = React.useState([
-    {
-      text: "Dashboard",
-      svgIcon: pencilIcon,
-      id: 1,
-      selected: true,
-      route: "/home/dashboard",
-    },
-    {
-      separator: true,
-    },
-    {
-      text: "Settings",
-      svgIcon: gridIcon,
-      id: 2,
-      dataExpanded: true,
-    },
-    {
-      text: "Product",
-      svgIcon: aggregateFieldsIcon,
-      id: 4,
-      parentId: 2,
-      route: "/home/products",
-      level: 2,
-    },
-    {
-        text: "Product Grid",
-        svgIcon: aggregateFieldsIcon,
-        id: 44,
-        parentId: 2,
-        route: "/home/product-grid",
-        level: 1,
-      },
-    {
-      text: "Italian Food",
-      svgIcon: minusIcon,
-      id: 5,
-      parentId: 2,
-      route: "/food/italian",
-      level: 1,
-    },
-    {
-      separator: true,
-    },
-    {
-      text: "Travel",
-      svgIcon: globeOutlineIcon,
-      dataExpanded: true,
-      id: 3,
-      route: "/travel",
-    },
-    {
-      text: "Europe",
-      svgIcon: minusIcon,
-      id: 6,
-      parentId: 3,
-      route: "/travel/europe",
-      level: 1,
-    },
-    {
-      text: "North America",
-      svgIcon: minusIcon,
-      id: 7,
-      parentId: 3,
-      route: "/travel/america",
-      level: 1,
-    },
-  ]);
+  const [items, setItems] = React.useState(menu);
   const handleClick = () => {
     setDrawerExpanded(!drawerExpanded);
   };
@@ -213,12 +84,22 @@ const DrawerContainer2 = (props) => {
 
   const setSelectedItem = (pathName) => {
     let currentPath = items.find((item) => item.route === pathName);
-    if (currentPath.text) {
+    if (currentPath && currentPath.text) {
       return currentPath.text;
     }
   };
 
   const selected = setSelectedItem(location.pathname);
+
+  const handleFilter = (event) => {
+    debugger;
+    console.log(menu);
+    const value = event.target.value.toLowerCase();
+    const filtered = menu.filter(
+      (m) => m.text && m.text.toLowerCase().includes(value)
+    );
+    setItems(filtered);
+  };
 
   return (
     <div>
@@ -227,16 +108,55 @@ const DrawerContainer2 = (props) => {
         <span className="overview">
           {selected === "Dashboard" ? "Overview" : selected}
         </span>
+
+        <div className="right-widget">
+          <div className="alert-container">
+            <Alert />
+          </div>
+          <Link
+            to="/home/about"
+            style={{
+              color: "#424242",
+              fontWeight: "400",
+              fontSize: "14px",
+              fontFamily: "Roboto",
+              marginTop: "3px",
+            }}
+          >
+            About
+          </Link>
+        </div>
       </div>
-      <div className='user-container' > 
-        <img src={require('../assets/people/user-avatar.jpg')} alt="user avatar"/> 
-       <h1>Jaxons Danniels</h1> 
-       <div className="user-email">jaxons.daniels@company.com</div> 
-       <Link to="/"  style={{ textDecoration: 'none' }}>
-       <Button className="user-button k-button k-button-md k-rounded-md k-button-solid k-button-solid-base" 
-       >Sign Out</Button> 
-       </Link>
+      <div className="user-container">
+        <img
+          src={require("../assets/people/user-avatar.jpg")}
+          alt="user avatar"
+        />
+        <h1>Jaxons Danniels</h1>
+        <div className="user-email">jaxons.daniels@company.com</div>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <Button className="user-button k-button k-button-md k-rounded-md k-button-solid k-button-solid-base">
+            Sign Out
+          </Button>
+        </Link>
+      
+        
+        <Input
+          style={{
+            border: "2px solid #ccc",
+            boxShadow: "inset 0px 0px 0.5px 0px rgba(0,0,0,0.0.1)",
+            margin:"5px",
+            width:"95%",
+          }}
+          placeholder={"Search in Menu"}
+          onChange={handleFilter}
+        />
+      
+      
       </div>
+
+
+      
       <Drawer
         expanded={drawerExpanded}
         mode="push"
@@ -250,8 +170,6 @@ const DrawerContainer2 = (props) => {
           <Outlet />
         </DrawerContent>
       </Drawer>
-
-  
     </div>
   );
 };

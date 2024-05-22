@@ -90,7 +90,7 @@ fetch('http://localhost:5027/api/Authentication/login', {
  <div className="sign-in-wrapper">
      <div className="logo-wrapper">
          <div className="logo">
-         <img src={require('../assets/signin.png')} alt={'sign in icon'} /> :
+         <img src={require('../assets/posmanager.png')} alt={'sign in icon'} /> 
          </div>
          <div className='banner'>
              Sign In
@@ -148,8 +148,11 @@ maxWidth: 650
  </div>
  <div className="frame-wrapper">
      <div className="text-wrapper">
-     <h2>How Does Kendo UI Cut Development Time?</h2>
-     <h4>Kendo UI delivers everything you need to build modern, beautiful, responsive apps.</h4>
+     <h2>PUREPOS Cloud Portal</h2>
+     <h4>Kassasystem - Pinautomaat - Voorraadbeheer</h4>
+     
+     <h4>Webshopkoppeling</h4>
+     <h4>Boekhoudkoppeling</h4>
           <div className="image-wrapper">
              <img src={require('../assets/kendoka.png')} alt={'kendoka'} className="kendoka"/>
          </div>

@@ -6,7 +6,7 @@ span.k-textbox {
 
 .logo-wrapper{
   height: 370px;
-  width: 270px;
+  width: 340px;
 
 }
 
@@ -224,8 +224,14 @@ div.k-form-field:nth-child(3) {
 }
 
 .text-wrapper {
- margin-top: 5vh;
+ margin-top: 10vh;
 }
+
+.text-wrapper h4{
+  
+  font-size: 23px;
+  line-height: 40px;
+ }
 
 .dashboard-button {
   text-decoration: none;
@@ -723,3 +729,4 @@ text-align: center;
 .switch {
   margin-left: 20px;
 }
+
