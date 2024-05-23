@@ -3,7 +3,6 @@ import {
     heartIcon,
     minusIcon,
     globeOutlineIcon,
-    menuIcon,
     chevronDownIcon,
     chevronRightIcon,
     gridIcon,

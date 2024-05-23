@@ -6,7 +6,7 @@ import {
   DrawerItem,
 } from "@progress/kendo-react-layout";
 import { Button } from "@progress/kendo-react-buttons";
-import { menu } from "./MenuContent";
+import { menu } from "./../data/menu"
 import {
   menuIcon,
   chevronDownIcon,
