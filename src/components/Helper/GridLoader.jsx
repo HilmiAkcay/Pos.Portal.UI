@@ -1,19 +1,9 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { toODataString } from "@progress/kendo-data-query";
-import { useLocation, useNavigate, Outlet, Link } from "react-router-dom";
-import axios from "axios";
-export const ProductsLoader = (props) => {
-  const baseUrl = "http://localhost:5027/odata/Application?$count=true&";
-  const init = {
-    method: "GET",
-    accept: "application/json",
-
-    headers: {
-      Authorization: `Bearer ${sessionStorage.getItem("token")}`, // Include JWT token in the Authorization header
-    },
-  };
-
+import { useNavigate } from "react-router-dom";
+import { LoadingPanel } from "../Helper/UIHelper";
+import { GetAddress, Init } from "../Helper/FetchHelper";
+export const GridLoader = (props) => {
   const navigate = useNavigate();
   const lastSuccess = React.useRef("");
   const pending = React.useRef("");
@@ -25,10 +15,14 @@ export const ProductsLoader = (props) => {
       return;
     }
     pending.current = toODataString(props.dataState);
-    fetch(baseUrl + pending.current, init)
+
+    console.log("token 2"+sessionStorage.getItem("token"));
+    
+    fetch(GetAddress(props.Controller, pending.current), Init)
       .then((response) => {
         if (response.status === 401) {
           navigate("/");
+          console.log("Fetch Error:"+ response);
         } else {
           console.log(response);
           if (response.ok) {
@@ -54,17 +48,4 @@ export const ProductsLoader = (props) => {
   };
   requestDataIfNeeded();
   return pending.current ? <LoadingPanel /> : null;
-};
-const LoadingPanel = () => {
-  const loadingPanel = (
-    <div className="k-loading-mask">
-      <span className="k-loading-text">Loading Please Wait...</span>
-      <div className="k-loading-image" />
-      <div className="k-loading-color" />
-    </div>
-  );
-  const gridContent = document && document.querySelector(".k-grid-content");
-  return gridContent
-    ? ReactDOM.createPortal(loadingPanel, gridContent)
-    : loadingPanel;
 };

@@ -11,7 +11,9 @@ import { Settings } from './pages/Settings.jsx';
 import { Account } from './components/settings/Account.jsx';
 import { Billing } from './components/settings/Billing.jsx';
 import { Notifications } from './components/settings/Notifications.jsx';
-import {ProdGrid} from './components/product-grid/productgrid.jsx';
+import { AppGrid } from './components/Grid/AppGrid.jsx';
+import { PageGrid } from './components/Grid/PageGrid.jsx';
+
 
 const App = () => {
     return ( 
@@ -24,7 +26,8 @@ const App = () => {
                <Route path="/home/about" element={<About/>}/>
                <Route path="/home/performance-and-sales" element={<PerformanceAndSales/>}/>
                <Route path="/home/products" element={<Products/>}/>
-               <Route path="/home/product-grid" element={<ProdGrid/>}/>
+               <Route path="/home/application" element={<AppGrid/>}/>
+               <Route path="/home/page" element={<PageGrid/>}/>
                <Route path="/home/settings" element={<Settings/>}/>
                <Route path="/home/account" element={<Account/>}/>
                <Route path="/home/billing" element={<Billing/>}/>

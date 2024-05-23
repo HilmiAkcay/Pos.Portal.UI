@@ -10,6 +10,7 @@ import {
     aggregateFieldsIcon,
     gearIcon,
     homeIcon,
+    slnIcon,
     calculatorIcon,
   } from "@progress/kendo-svg-icons";
 
@@ -46,11 +47,19 @@ export const menu = [
       level: 2,
     },
     {
-        text: "Product Grid",
-        svgIcon: aggregateFieldsIcon,
+        text: "Application",
+        svgIcon: slnIcon,
         id: 44,
         parentId: 2,
-        route: "/home/product-grid",
+        route: "/home/application",
+        level: 1,
+      },
+      {
+        text: "PurePOS Page",
+        svgIcon: slnIcon,
+        id: 45,
+        parentId: 2,
+        route: "/home/page",
         level: 1,
       },
       {

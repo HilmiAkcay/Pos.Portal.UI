@@ -1,9 +1,8 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
-import { ProductsLoader } from './products-loader';
+import { GridLoader } from '../Helper/GridLoader';
 
-export const  ProdGrid = () => {
+export const  AppGrid = () => {
   const [products, setProducts] = React.useState({
     data: [],
     total: 77
@@ -34,6 +33,6 @@ export const  ProdGrid = () => {
         {/* <Column field="UnitsInStock" filter="numeric" title="In stock" /> */}
       </Grid>
 
-      <ProductsLoader dataState={dataState} onDataReceived={dataReceived} />
+      <GridLoader Controller="Application" dataState={dataState} onDataReceived={dataReceived} />
     </div>;
 };

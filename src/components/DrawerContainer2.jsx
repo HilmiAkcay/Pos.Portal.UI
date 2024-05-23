@@ -19,8 +19,6 @@ import { Input } from "@progress/kendo-react-inputs";
 const CustomItem = (props) => {
   const { visible, ...others } = props;
   const className = props.parentId != null ? " subLi" : "";
-  console.log(className);
-  console.log(props);
   const arrowDir = props.dataExpanded ? chevronDownIcon : chevronRightIcon;
   return props.visible === false ? null : (
     <DrawerItem {...others}>
