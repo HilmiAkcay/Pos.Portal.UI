@@ -1,16 +1,16 @@
 import * as React from "react";
-import { Grid, GridColumn as Column } from "@progress/kendo-react-grid";
+import { Grid, GridColumn as Column,GridToolbar } from "@progress/kendo-react-grid";
 import { GridLoader } from "../Helper/GridLoader";
 
 export const PageGrid = () => {
   const [products, setProducts] = React.useState({
     data: [],
-    total: 77,
+    total: 0,
   });
 
   const [editID, setEditID] = React.useState(null);
   const [dataState, setDataState] = React.useState({
-    take: 10,
+    take: 5,
     skip: 0,
   });
 
@@ -18,15 +18,8 @@ export const PageGrid = () => {
     setDataState(e.dataState);
   };
 
-  const handleSave = () => {
-    setEditID(null);
-  };
-
-  const handleCancel = () => {
-    setEditID(null);
-  };
-
   const dataReceived = (products) => {
+    console.log('dataReceived');
     if (products.data) {
       var data = products.data.map((item) => ({
         ...item,
@@ -43,33 +36,76 @@ export const PageGrid = () => {
   };
 
   const handleChange = (e) => {
-    const newData = products.map((item) =>
-      item.id === e.dataItem.id ? { ...item, [e.field]: e.value } : item
+    console.log('handle change');
+    console.log(e);
+    const newData = products.data.map((item) =>
+      item.ID === e.dataItem.ID ? { ...item, [e.field]: e.value } : item
     );
-    setProducts(newData);
+    console.log(newData);
+
+    products.data = newData;
+    setProducts(products);
   };
 
-  const handleEdit = (dataItem) => {
-    setEditID(dataItem.id);
+  const handleEdit = (e) => {
+    console.log(e.dataItem.ID);
+    setEditID(e.dataItem.ID);
+  };
+
+  const closeEdit = (event) => {
+    if (event.target === event.currentTarget) {
+      setEditID(null);
+    }
+  };
+  const addRecord = () => {
+    const newRecord = {
+      ID: -1,
+      PurePosId:0
+    };
+    console.log(newRecord);
+    products.data = [newRecord, ...products.data];
+    setProducts(products);
+   
+    setEditID(newRecord.ID);
   };
 
   return (
     <div className="m-2">
       <Grid
+
+      
         dataItemKey={"ID"}
         filterable={true}
         sortable={true}
         pageable={true}
         {...dataState}
-        data={products}
+        //  data={products}
+         data={ 
+           products.data.map((item) => ({
+           ...item,
+           inEdit: item.ID === editID,
+         }))}
+         total={products.total}
         editField="inEdit"
         onRowClick={handleEdit}
-        onItemChange={(e) => handleEdit(e.dataItem)}
+        onItemChange={handleChange}
         onDataStateChange={dataStateChange}
       >
+        <GridToolbar>
+        <div onClick={closeEdit}>
+          <button
+            title="Add new"
+            className="k-button k-button-md k-rounded-md k-button-solid k-button-solid-primary"
+            onClick={addRecord}
+          >
+            Add new
+          </button>
+        </div>
+      </GridToolbar>
         {/* <Column field="ProductID" filter="numeric" title="Id" /> */}
         <Column
           field="PurePosId"
+          filter="numeric"
           title="Pos Menu Id"
           editable={true}
           editor="numeric"
