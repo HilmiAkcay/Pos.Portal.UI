@@ -2,7 +2,7 @@ import * as React from "react";
 import { toODataString } from "@progress/kendo-data-query";
 import { useNavigate } from "react-router-dom";
 import { LoadingPanel } from "../Helper/UIHelper";
-import { GetAddress, Init } from "../Helper/FetchHelper";
+import { GetPagedAddress, Init } from "../Helper/FetchHelper";
 export const GridLoader = (props) => {
   const navigate = useNavigate();
   const lastSuccess = React.useRef("");
@@ -18,7 +18,7 @@ export const GridLoader = (props) => {
 
     console.log("token 2"+sessionStorage.getItem("token"));
     
-    fetch(GetAddress(props.Controller, pending.current), Init)
+    fetch(GetPagedAddress(props.Controller, pending.current), Init())
       .then((response) => {
         if (response.status === 401) {
           navigate("/");
